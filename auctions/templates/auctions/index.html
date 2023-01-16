@@ -2,13 +2,15 @@
 
 {% block body %}
     <h2>Active Listings</h2>
-    <form action="{% url 'displayCategory' %}" method="POST">
+    <form action="{% url 'displayCategory' %}" method="POST" class="my-3">
+        {% csrf_token %}
         <label for="category">Choose a Category</label>
         <select name="category" id="category">
             {% for cat in categories %}
                 <option value="{{ cat }}">{{ cat }}</option>
             {% endfor %}
         </select>
+        <button type="submit" class="btn btn-warning">Select</button>
     </form>
     <div class="row max-3">
         {% for listing in listings %}
@@ -17,7 +19,7 @@
             <div class="card-body">
               <h5 class="card-title">{{ listing.title }}</h5>
               <p class="card-text">{{ listing.description }}</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
+              <a href="{% url 'listing' id=listing.id %}" class="btn btn-primary">Details</a>
             </div>
           </div>
         {% endfor %}
